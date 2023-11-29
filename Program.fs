@@ -4,7 +4,6 @@ type Director = {
     Name: string
     Movies: int
 }
-
 type Movie = {
     Name: string
     RunLength: int
@@ -12,7 +11,6 @@ type Movie = {
     Director: Director
     IMDbRating: float
 }
-
 let genreToString (genre: Genre) =
     match genre with
     | Horror -> "Horror"
@@ -96,14 +94,19 @@ let convertRunLengthToHours (runLength: int) =
     let minutes = runLength % 60
     sprintf "%dh %dmin" hours minutes
 
-printfn "Probable Oscar Winners:"
-probableOscarWinners |> List.iter (fun movie -> printfn "%s (%s) - IMDb Rating: %.1f" movie.Name (genreToString movie.Genre) movie.IMDbRating)
+//printfn "Probable Oscar Winners:"
+//probableOscarWinners |> List.iter (fun movie -> printfn "%s (%s) - IMDb Rating: %.1f" movie.Name (genreToString movie.Genre) movie.IMDbRating)
 
 
 printfn "\nRun Lengths in Hours:"
-let runLengthInHours = allMovies |> List.map (fun movie -> convertRunLengthToHours movie.RunLength)
-runLengthInHours |> List.iter (fun runLength -> printfn "%s" runLength)
+allMovies
+|> List.iter (fun movie ->
+    let runLengthInHours = convertRunLengthToHours movie.RunLength
+    printfn "%s - %s" movie.Name runLengthInHours
+)
 
 
-printfn "\nAll Movie Names:"
-allMovies |> List.iter (fun movie -> printfn "%s" movie.Name)
+
+
+//printfn "\nAll Movie Names:"
+//allMovies |> List.iter (fun movie -> printfn "%s" movie.Name)
