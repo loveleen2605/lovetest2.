@@ -44,21 +44,66 @@ let movies : Movie list = [
         Director = { Name = "Adam McKay"; Movies = 27 }
         IMDbRating = 7.2
     }
-    // Add other movies based on the given data
+    
 ]
 
-let probableOscarWinners = movies |> List.filter (fun movie -> movie.IMDbRating > 7.4)
+
+let additionalMovies : Movie list = [
+    {
+        Name = "Drive My Car"
+        RunLength = 155
+        Genre = Drama
+        Director = { Name = "Ryusuke Hamaguchi"; Movies = 16 }
+        IMDbRating = 7.6
+    }
+    {
+        Name = "Dune"
+        RunLength = 179
+        Genre = Fantasy
+        Director = { Name = "Denis Villeneuve"; Movies = 24 }
+        IMDbRating = 8.1
+    }
+    {
+        Name = "King Richard"
+        RunLength = 144
+        Genre = Sport
+        Director = { Name = "Reinaldo Marcus Green"; Movies = 22 }
+        IMDbRating = 7.5
+    }
+    {
+        Name = "Licorice Pizza"
+        RunLength = 133
+        Genre = Comedy
+        Director = { Name = "Paul Thomas Anderson"; Movies = 8 }
+        IMDbRating = 7.4
+    }
+    {
+        Name = "Nightmare Alley"
+        RunLength = 150
+        Genre = Thriller
+        Director = { Name = "Guillermo Del Toro"; Movies = 15 }
+        IMDbRating = 7.1
+    }
+]
+
+
+let allMovies = movies @ additionalMovies
+
+let probableOscarWinners = allMovies |> List.filter (fun movie -> movie.IMDbRating > 7.4)
 
 let convertRunLengthToHours (runLength: int) =
     let hours = runLength / 60
     let minutes = runLength % 60
     sprintf "%dh %dmin" hours minutes
 
-// Print probable Oscar winners
 printfn "Probable Oscar Winners:"
 probableOscarWinners |> List.iter (fun movie -> printfn "%s (%s) - IMDb Rating: %.1f" movie.Name (genreToString movie.Genre) movie.IMDbRating)
 
-// Print run lengths in hours
+
 printfn "\nRun Lengths in Hours:"
-let runLengthInHours = movies |> List.map (fun movie -> convertRunLengthToHours movie.RunLength)
+let runLengthInHours = allMovies |> List.map (fun movie -> convertRunLengthToHours movie.RunLength)
 runLengthInHours |> List.iter (fun runLength -> printfn "%s" runLength)
+
+
+printfn "\nAll Movie Names:"
+allMovies |> List.iter (fun movie -> printfn "%s" movie.Name)
